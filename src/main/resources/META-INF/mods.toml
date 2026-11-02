@@ -1,0 +1,35 @@
+modLoader="javafml"
+loaderVersion="[43,)"
+license="LGPL-3.0"
+issueTrackerURL="https://github.com/CaelTheColher/KeybindsGalore/issues"
+
+[[mixins]]
+config="keybindsgalore.mixins.json"
+
+[[mods]]
+modId="keybindsgalore"
+version="${file.jarVersion}"
+displayName="Keybinds Galore (Forge)"
+displayURL="https://www.curseforge.com/minecraft/mc-mods/keybinds"
+credits="Forge port of Keybinds Galore by Cael. Radial menu UI adapted from Psi by Vazkii."
+authors="Cael, Forge port contributors"
+displayTest="IGNORE_ALL_VERSION"
+description='''
+When you press a key bound to multiple actions, opens a radial pie menu so you can pick which binding to activate instead of triggering all of them or none.
+
+Forge 1.19.2 port of the Fabric mod Keybinds Galore. Client-side only.
+'''
+
+[[dependencies.keybindsgalore]]
+    modId="forge"
+    mandatory=true
+    versionRange="[43,)"
+    ordering="NONE"
+    side="CLIENT"
+
+[[dependencies.keybindsgalore]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.19.2,1.20)"
+    ordering="NONE"
+    side="CLIENT"

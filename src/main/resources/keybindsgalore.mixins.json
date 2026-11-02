@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "me.cael.keybindsgalore.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "keybindsgalore.refmap.json",
+  "client": [
+    "AccessorKeyMapping",
+    "MixinKeyMapping"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
