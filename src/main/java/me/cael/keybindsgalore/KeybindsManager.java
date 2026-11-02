@@ -21,6 +21,14 @@ public class KeybindsManager {
                 matches.add(bind);
             }
         }
+        // A protected gameplay binding on this key must keep working. Skip the
+        // pie menu and let Forge deliver the event the way it does without this mod.
+        for (KeyMapping bind : matches) {
+            if (KeybindsGaloreConfig.isExcluded(bind.getName(), bind.getCategory())) {
+                KeybindsManager.conflictingKeys.remove(key);
+                return false;
+            }
+        }
         if (matches.size() > 1) {
             KeybindsManager.conflictingKeys.put(key, matches);
             return true;

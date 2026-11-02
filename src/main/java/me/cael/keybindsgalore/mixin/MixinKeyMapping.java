@@ -34,7 +34,9 @@ public abstract class MixinKeyMapping {
 
     @Inject(method = "click", at = @At("HEAD"), cancellable = true)
     private static void keybindsgalore$click(InputConstants.Key key, CallbackInfo ci) {
-        if (KeybindsManager.isConflicting(key)) {
+        // Re-check here so a gameplay exclusion is honored even when click runs
+        // before set, and so a stale conflict flag cannot still open the menu.
+        if (KeybindsManager.handleConflict(key)) {
             ci.cancel();
             KeybindsManager.openConflictMenu(key);
         }

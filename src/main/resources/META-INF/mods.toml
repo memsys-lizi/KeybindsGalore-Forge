@@ -17,6 +17,8 @@ displayTest="IGNORE_ALL_VERSION"
 description='''
 When you press a key bound to multiple actions, opens a radial pie menu so you can pick which binding to activate instead of triggering all of them or none.
 
+Movement, jump, sneak, sprint, attack, use, and the other gameplay bindings listed in config/keybindsgalore-client.toml never open that menu. They keep vanilla behavior even if something else is bound to the same key.
+
 Forge 1.19.2 port of the Fabric mod Keybinds Galore. Client-side only.
 '''
 
