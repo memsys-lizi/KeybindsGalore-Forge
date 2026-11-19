@@ -8,7 +8,7 @@ Core gameplay controls are the exception. Movement, jump, sneak, sprint, attack,
 
 - **Mod ID:** `keybindsgalore`
 - **Display name:** Keybinds Galore (Forge)
-- **Version:** 1.0.1
+- **Version:** 1.0.2
 - **Minecraft:** 1.19.2
 - **Forge:** 43.x (built against 43.3.0)
 - **Java:** 17
@@ -18,7 +18,7 @@ Core gameplay controls are the exception. Movement, jump, sneak, sprint, attack,
 
 1. A key with one binding fires that binding as usual.
 2. A key with two or more bindings does not open the pie menu when any of those bindings is excluded (see below). Otherwise a pie menu opens while the key is held.
-3. Move the mouse over the action you want, then release the key. That binding is pressed once.
+3. Move the mouse over the action you want, then release the key. That binding is pressed once: its click count increases by one, it stays held for two full client ticks, and a Forge key or mouse event is posted so mods that poll `isDown()` or listen for input see the press. Then it is released.
 4. Release the key without a selection (or while the pointer is still in the center) and nothing is activated.
 
 The radial menu rendering is adapted from [Psi](https://github.com/Vazkii/Psi) by Vazkii (see the comment in `KeybindsScreen`).
@@ -61,11 +61,25 @@ The list is the client config `config/keybindsgalore-client.toml`, created the f
 
 Pick block and the hotbar slots are included because they are used the same way during play as attack, use, and movement. Delete those lines if you want a pie menu for them. Other ids you may want to add yourself include `key.drop`, `key.swapOffhand`, and `key.inventory`.
 
+## Turning the pie menu on or off
+
+The client config has a master switch. It is created on first launch as `config/keybindsgalore-client.toml` (`.minecraft/config/keybindsgalore-client.toml` in a normal install):
+
+```toml
+[general]
+	enabled = true
+```
+
+- `true` (default): conflicting keys open the pie menu, except bindings in `excludedKeybinds`.
+- `false`: the mod does nothing. Every key behaves like vanilla Forge, with no pie menu.
+
+Close the game before editing the file, then start it again. You can also flip it in a world without editing the file. **Toggle pie menu** is under **Options → Controls → Keybinds Galore**. It starts unbound; bind any key you like. Pressing it saves the new value and shows an action-bar message, green when the pie menu is on and red when it is off. The toggle still works while the mod is disabled, so you can turn the pie menu back on.
+
 ## Install
 
 1. Install [Minecraft 1.19.2](https://www.minecraft.net/) and [Minecraft Forge 1.19.2-43.x](https://files.minecraftforge.net/net/minecraftforge/forge/index_1.19.2.html) (43.3.0 or another 43.x build).
 2. Launch the game once with the Forge profile so the `mods` folder is created.
-3. Copy `keybindsgalore-forge-1.0.1+1.19.2.jar` from `build/libs/` (or a release) into `.minecraft/mods/`.
+3. Copy `keybindsgalore-forge-1.0.2+1.19.2.jar` from `build/libs/` (or a release) into `.minecraft/mods/`.
 4. Start Minecraft with the Forge 1.19.2 profile. The mod is client-only; a dedicated server does not need it.
 
 To try the pie menu: open **Options → Controls** and bind two different actions to the same key (for example Drop and Swap Offhand). Press that key in a world. The pie menu should appear. Binding a second action to W, Space, Shift, Ctrl, or the left or right mouse button should **not** open the menu; that gameplay control keeps working.
@@ -85,7 +99,7 @@ export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
 The reobfuscated mod jar is written to:
 
 ```
-build/libs/keybindsgalore-forge-1.0.1+1.19.2.jar
+build/libs/keybindsgalore-forge-1.0.2+1.19.2.jar
 ```
 
 ## Credits
@@ -114,7 +128,7 @@ The pie-menu drawing in `KeybindsScreen` is modified from Psi. Psi is open sourc
 
 - **模组 ID：** `keybindsgalore`
 - **显示名称：** Keybinds Galore (Forge)
-- **版本：** 1.0.1
+- **版本：** 1.0.2
 - **Minecraft：** 1.19.2
 - **Forge：** 43.x（针对 43.3.0 构建）
 - **Java：** 17
@@ -124,7 +138,7 @@ The pie-menu drawing in `KeybindsScreen` is modified from Psi. Psi is open sourc
 
 1. 只绑定一个功能的按键，照常触发。
 2. 绑定了两个及以上功能的按键，如果其中任意一个在排除列表中（见下文），则不打开饼状菜单；否则在按住时打开饼状菜单。
-3. 把鼠标移到想要的功能上，然后松开按键，该绑定会被按下一次。
+3. 把鼠标移到想要的功能上，然后松开按键。该绑定会被按下一次：点击计数加一，并保持按下两个完整的客户端 tick，同时发送一次 Forge 的按键或鼠标事件，让轮询 `isDown()` 或监听输入事件的模组都能收到这次按下。随后松开。
 4. 没有选中任何扇区就松开按键（或指针仍在圆心）则不触发任何功能。
 
 径向菜单的绘制改编自 Vazkii 的 [Psi](https://github.com/Vazkii/Psi)（见 `KeybindsScreen` 中的注释）。
@@ -167,11 +181,25 @@ The pie-menu drawing in `KeybindsScreen` is modified from Psi. Psi is open sourc
 
 选取方块和快捷栏与攻击、使用、移动一样，都是游戏过程中会持续用到的操作，因此默认一并排除。如果希望它们弹出饼状菜单，删掉对应的行即可。你也可以自行加入 `key.drop`、`key.swapOffhand`、`key.inventory` 等 id。
 
+## 开关饼状菜单
+
+客户端配置里有一个总开关。第一次启动游戏时会生成 `config/keybindsgalore-client.toml`（常规安装路径为 `.minecraft/config/keybindsgalore-client.toml`）：
+
+```toml
+[general]
+	enabled = true
+```
+
+- `true`（默认）：冲突的按键会打开饼状菜单，但 `excludedKeybinds` 里的绑定除外。
+- `false`：模组什么都不做。所有按键都按原版 Forge 处理，不会出现饼状菜单。
+
+改文件前请先关闭游戏，改完再启动。也可以在世界里直接切换，不必改文件。**开关饼状菜单** 位于 **选项 → 控制 → 键位盛宴**。它默认没有绑定按键，你可以自己设一个。按下后会保存新的值，并在动作栏显示提示：开启时为绿色，关闭时为红色。模组被关掉时这个开关仍然有效，因此可以再把饼状菜单打开。
+
 ## 安装
 
 1. 安装 [Minecraft 1.19.2](https://www.minecraft.net/) 与 [Minecraft Forge 1.19.2-43.x](https://files.minecraftforge.net/net/minecraftforge/forge/index_1.19.2.html)（43.3.0 或其他 43.x 版本）。
 2. 用 Forge 配置启动一次游戏，以便生成 `mods` 文件夹。
-3. 将 `build/libs/`（或发布包）中的 `keybindsgalore-forge-1.0.1+1.19.2.jar` 复制到 `.minecraft/mods/`。
+3. 将 `build/libs/`（或发布包）中的 `keybindsgalore-forge-1.0.2+1.19.2.jar` 复制到 `.minecraft/mods/`。
 4. 使用 Forge 1.19.2 配置启动游戏。本模组仅客户端需要，专用服务器不必安装。
 
 试用饼状菜单：打开 **选项 → 控制**，把两个不同的操作绑到同一个键（例如丢弃与切换副手）。在世界中按下该键，应出现饼状菜单。若把另一个功能绑到 W、空格、Shift、Ctrl 或鼠标左键 / 右键，则 **不应** 出现菜单，对应的游戏操作仍可正常使用。
@@ -191,7 +219,7 @@ export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
 混淆后的模组 jar 位于：
 
 ```
-build/libs/keybindsgalore-forge-1.0.1+1.19.2.jar
+build/libs/keybindsgalore-forge-1.0.2+1.19.2.jar
 ```
 
 ## 致谢

@@ -16,7 +16,6 @@ import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.blaze3d.vertex.VertexFormat;
-import me.cael.keybindsgalore.mixin.AccessorKeyMapping;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.KeyMapping;
 
@@ -154,9 +153,7 @@ public class KeybindsScreen extends Screen {
         List<KeyMapping> conflicting = KeybindsManager.getConflicting(key);
         if (slot != -1 && conflicting != null && slot < conflicting.size()) {
             KeyMapping bind = conflicting.get(slot);
-            ((AccessorKeyMapping) bind).setDown(true);
-            ((AccessorKeyMapping) bind).setClickCount(1);
-            KeybindsManager.armRelease(bind);
+            KeybindsManager.activateSelection(bind);
         }
     }
 

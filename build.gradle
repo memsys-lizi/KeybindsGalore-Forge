@@ -15,7 +15,7 @@ plugins {
 
 apply plugin: 'org.spongepowered.mixin'
 
-version = '1.0.1+1.19.2'
+version = '1.0.2+1.19.2'
 group = 'me.cael.keybindsgalore'
 archivesBaseName = 'keybindsgalore-forge'
 

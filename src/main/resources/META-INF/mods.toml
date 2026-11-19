@@ -19,6 +19,8 @@ When you press a key bound to multiple actions, opens a radial pie menu so you c
 
 Movement, jump, sneak, sprint, attack, use, and the other gameplay bindings listed in config/keybindsgalore-client.toml never open that menu. They keep vanilla behavior even if something else is bound to the same key.
 
+Set [general] enabled to false, or use the unbound "Toggle pie menu" key, to turn the mod off.
+
 Forge 1.19.2 port of the Fabric mod Keybinds Galore. Client-side only.
 '''
 

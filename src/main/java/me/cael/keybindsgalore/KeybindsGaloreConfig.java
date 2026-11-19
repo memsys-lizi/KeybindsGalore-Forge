@@ -24,9 +24,20 @@ public final class KeybindsGaloreConfig {
     }
 
     public static final class Client {
+        public final ForgeConfigSpec.BooleanValue enabled;
         public final ForgeConfigSpec.ConfigValue<List<String>> excludedKeybinds;
 
         private Client(ForgeConfigSpec.Builder builder) {
+            builder.comment(
+                    "Master switch.",
+                    "When false, Keybinds Galore does nothing: no pie menu, and keys behave like vanilla Forge.",
+                    "The in-game \"Toggle pie menu\" control flips this value and saves it."
+            ).push("general");
+            enabled = builder
+                    .comment("Set to false to disable the pie menu entirely.")
+                    .define("enabled", true);
+            builder.pop();
+
             builder.comment(
                     "Bindings listed below never open the pie menu.",
                     "If the key you press matches any excluded binding, the menu is skipped and Minecraft handles that key the way Forge does without this mod:",
@@ -99,5 +110,21 @@ public final class KeybindsGaloreConfig {
             }
         }
         return false;
+    }
+
+    public static boolean isEnabled() {
+        if (!SPEC.isLoaded()) {
+            return true;
+        }
+        return CLIENT.enabled.get();
+    }
+
+    public static boolean toggleEnabled() {
+        boolean next = !isEnabled();
+        if (SPEC.isLoaded()) {
+            CLIENT.enabled.set(next);
+            CLIENT.enabled.save();
+        }
+        return next;
     }
 }
